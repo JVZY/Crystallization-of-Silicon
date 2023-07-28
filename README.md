@@ -45,9 +45,12 @@ cd lammps-stable_3Mar2020/src
 make lib-plumed args="-b"
 ```
 The default "ld" version is too high. 
+
 Go to "xxx/lammps-stable_3Mar2020/lib/plumed/Install.py", and comment out everything between "if buildflag:" and "# build plumed" to prevent lammps download plumed again.
+
 Go to "xxx//lammps-stable_3Mar2020/lib/plumed/plumed-2.6.0/Makefile.conf.in", and change "LD_RO=@LD_RO@" to "
 LD_RO=/opt/rh/gcc-toolset-10/root/usr/bin/ld -r -o".
+
 Then go back to "xxx/lammps-stable_3Mar2020/src"
 ```
 make lib-plumed args="-b"
