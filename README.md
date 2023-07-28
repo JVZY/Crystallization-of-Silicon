@@ -31,12 +31,25 @@ I suggest to try the first one and use the second alternative if the first fails
 #### Compilation instructions: First alternative
 
 Let's start with the easiest.
-LAMMPS and PLUMED can be installed with the following commands:
+LAMMPS and PLUMED can be installed with the following commands (for stellar):
 
 ```
+module load cmake/3.19.7
+module load intel/19.1.1.217
+module load intel-mpi/intel/2019.7
+module load anaconda3/2021.11
+
 wget https://github.com/lammps/lammps/archive/stable_3Mar2020.tar.gz
 tar -xf stable_3Mar2020.tar.gz
 cd lammps-stable_3Mar2020/src
+make lib-plumed args="-b"
+```
+The default "ld" version is too high. 
+Go to "xxx/lammps-stable_3Mar2020/lib/plumed/Install.py", and comment out everything between "if buildflag:" and "# build plumed" to prevent lammps download plumed again.
+Go to "xxx//lammps-stable_3Mar2020/lib/plumed/plumed-2.6.0/Makefile.conf.in", and change "LD_RO=@LD_RO@" to "
+LD_RO=/opt/rh/gcc-toolset-10/root/usr/bin/ld -r -o".
+Then go back to "xxx/lammps-stable_3Mar2020/src"
+```
 make lib-plumed args="-b"
 make yes-user-plumed
 make yes-manybody
